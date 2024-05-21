@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/core/AiryCore.core.main.iml" filepath="$PROJECT_DIR$/.idea/modules/core/AiryCore.core.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/paper/AiryCore.paper.main.iml" filepath="$PROJECT_DIR$/.idea/modules/paper/AiryCore.paper.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/velocity/AiryCore.velocity.main.iml" filepath="$PROJECT_DIR$/.idea/modules/velocity/AiryCore.velocity.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/velocity/AiryCore.velocity.test.iml" filepath="$PROJECT_DIR$/.idea/modules/velocity/AiryCore.velocity.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DevMode.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DevMode.main.iml" />
+    </modules>
+  </component>
+</project>
