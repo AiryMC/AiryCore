@@ -1,9 +1,4 @@
-plugins {
-    id 'java'
-}
-
 project ':core'
 
-repositories {
-    mavenCentral()
-}
+group 'net.airymc'
+version '0.0.1'

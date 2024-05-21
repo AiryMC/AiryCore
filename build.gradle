@@ -1,33 +1,106 @@
+import com.github.jengelman.gradle.plugins.shadow.transformers.ServiceFileTransformer
+
 plugins {
     id 'java'
+    id 'maven-publish'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 group = 'net.airymc'
 version = '0.0.1'
 
-repositories {
-    mavenCentral()
+/*
+publishing {
+    publications {
+        publishToMavenLocal(MavenPublication) {
+            groupId = "net.airymc"
+            artifactId = project.name
+            version "$version"
+
+            from components.java
+        }
+    }
+
+    repositories {
+        mavenLocal()
+    }
+}
+*/
+
+allprojects {
+    apply plugin: 'maven-publish'
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+
+    }
+
+    java {
+        withSourcesJar()
+    }
+
+    publishing {
+        publications {
+            publishToMavenLocal(MavenPublication) {
+                groupId = "net.airymc"
+                artifactId = "AiryCore"
+                version "$version"
+
+                artifact shadowJar
+            }
+        }
+
+        repositories {
+            mavenLocal()
+        }
+    }
 }
 
+subprojects {
+    apply plugin: 'java-library'
+
+    group = 'net.airymc'
+    version = version
+
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+
+    dependencies {
+        implementation 'dev.dejvokep:boosted-yaml:1.3.5'
+        implementation 'org.json:json:20240303'
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    apply plugin: 'maven-publish'
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'dev.dejvokep:boosted-yaml:1.3.5'
+    implementation 'org.json:json:20240303'
 
     implementation project(path: ':core')
     implementation project(path: ':paper')
     implementation project(path: ':velocity')
 }
 
-test {
-    useJUnitPlatform()
-}
-
 shadowJar {
-    archiveClassifier.set('') // Normally the shadowJar output has -all, but I personally don't want that
-    dependencies { // Everything that should be in the final Jar must be listed here
-        include(project(':core'))
-        include(project(':paper'))
-        include(project(':velocity'))
+    archiveClassifier.set('')
+    dependencies {
+        include dependency('dev.dejvokep:boosted-yaml:1.3.5')
+        include dependency('org.json:json:20240303')
+
+        include project(path: ':core')
+        include project(path: ':paper')
+        include project(path: ':velocity')
     }
 }
+
+build.dependsOn shadowJar

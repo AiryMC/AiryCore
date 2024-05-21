@@ -1,10 +1,11 @@
 plugins {
-    id 'java'
+    id 'java-library'
 }
 
 project ':paper'
 
 group 'net.airymc'
+version '0.0.1'
 
 repositories {
     mavenCentral()
@@ -15,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(path: ':core')
+    api project(path: ':core')
 
     compileOnly 'io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT'
 }
