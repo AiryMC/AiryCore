@@ -76,6 +76,10 @@ public class Config {
         }
     }
 
+    public boolean has(String key) {
+        return get(key) != null;
+    }
+
     public String getPath() {
         return path;
     }
