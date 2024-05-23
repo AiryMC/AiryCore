@@ -19,4 +19,8 @@ public class HTTPUtils {
                 .join();
         return new JSONObject(body);
     }
+
+    public static boolean hasError(JSONObject object) {
+        return object.has("error") || object.has("errorMessage");
+    }
 }
