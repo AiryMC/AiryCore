@@ -35,10 +35,17 @@ public class PlayerUtils {
      * @param username Username of the player you want the uuid from
      * @return An optional that contains the uuid
      */
-    public static Optional<UUID> getUuidByName(String username) {
+    public static Optional<UUID> getUUIDByName(String username) {
         JSONObject body = HTTPUtils.sendGetRequest("https://api.mojang.com/users/profiles/minecraft/" + username);
-        if (body.has("errorMessage"))
+        if (HTTPUtils.hasError(body))
             return Optional.empty();
         return Optional.of(fixUuidString(body.getString("id")));
+    }
+
+    public static Optional<String> getNameByUUID(UUID uuid) {
+        JSONObject body = HTTPUtils.sendGetRequest("https://sessionserver.mojang.com/session/minecraft/profile/" + uuid);
+        if (HTTPUtils.hasError(body))
+            return Optional.empty();
+        return Optional.of(body.getString("name"));
     }
 }
