@@ -1,13 +1,12 @@
 package net.airymc.core.file;
 
 import dev.dejvokep.boostedyaml.YamlDocument;
+import dev.dejvokep.boostedyaml.block.implementation.Section;
 import dev.dejvokep.boostedyaml.route.Route;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Config {
 
@@ -64,6 +63,24 @@ public class Config {
         return (T) document.get(Route.from(key));
     }
 
+    public List<String> getKeys(String root) {
+        List<String> entries = new ArrayList<>();
+        Collection<Object> keys = new ArrayList<>();
+
+        if (root.isBlank()) {
+            keys = document.getKeys();
+        } else {
+            Section section = document.getSection(Route.from(root));
+            keys = section.getKeys();
+        }
+
+        for (Object entry : keys) {
+            entries.add((String) entry);
+        }
+
+        return entries;
+    }
+
     public <T> void set(String key, T value) {
         document.set(Route.from(key), value);
         save();
@@ -74,6 +91,11 @@ public class Config {
             document.set(Route.from(key), value);
             save();
         }
+    }
+
+    public void remove(String key) {
+        document.remove(Route.from(key));
+        save();
     }
 
     public boolean has(String key) {
